@@ -38,6 +38,8 @@ dependencies:
   dio:
   get:
   provider:
+  bloc:
+  flutter_bloc:
 
 
 dev_dependencies:

@@ -4,6 +4,9 @@ import 'package:get/get.dart';
 class Mygexss extends StatelessWidget {
   Mygetsvalue dd = Get.put(Mygetsvalue());
 
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

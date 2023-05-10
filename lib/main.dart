@@ -1,14 +1,65 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
-import 'Providerr.dart';
+import 'mydemo_bloc.dart';
 
 void main() {
-  runApp(GetMaterialApp(
-    home: MaterialApp(
-      home: Myproviderr(),
+  runApp(
+    MultiProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => MydemoBloc(),
+        )
+      ],
+      child: MaterialApp(
+        home: Mydemo(),
+      ),
     ),
-  ));
+  );
+}
+
+class Mydemo extends StatefulWidget {
+  const Mydemo({Key? key}) : super(key: key);
+
+  @override
+  State<Mydemo> createState() => _MydemoState();
+}
+
+class _MydemoState extends State<Mydemo> {
+  MydemoBloc? mydemoBloc;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    mydemoBloc = BlocProvider.of<MydemoBloc>(context);
+    mydemoBloc!.add(IntialEvent(0));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [
+          IconButton(
+              onPressed: () {
+                mydemoBloc!.add(Decreent());
+              },
+              icon: Icon(Icons.exposure_minus_1)),
+          BlocBuilder<MydemoBloc, MydemoState>(
+            builder: (context, state) {
+              if (state is MydemoInitial) {
+                return Text("${state.i}");
+              }
+              return Text("===");
+            },
+          )
+        ],
+      ),
+    );
+  }
 }
 
 // state = > a Data or an Informtion
